@@ -4,7 +4,7 @@ from funzioni import dist as Xdata
 def satisfaction_calc(tour):
     sat = 0
     time = 0
-    n = 0
+
     for k in range(1,len(tour[0])):
         time += Xdata[tour[0][k-1],tour[0][k]]
         open = fun.open_attr(tour[0][k], time/60)

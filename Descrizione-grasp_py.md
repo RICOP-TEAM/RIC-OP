@@ -2,7 +2,7 @@
 Funzione che viene eseguita dopo che è stato trovato un tour completo (tour). 
 Calcola il gradimento (sat) il tempo trascorso (time) per vedere ogni attrazione aperta, invece quando si trova un'attrazione nel tour che risulta in quel momento chiusa si aggiunge anche il tempo di attesa necessario affinchè l'attrazione risulti aperta.
 - Viene valutata un'attrazione alla volta.
->Si restituisce una lista(tour) contenente [ [ nodi_visti ],tempo, gradimento]
+>Si restituisce una lista(tour) contenente [ [ nodi_visti ],gradimento, tempo]
 
 ### def first_op():
 Viene costruito un primo percorso da utilizzare come migliore soluzione alla prima iterazione della GRASP.
@@ -31,14 +31,22 @@ Funzione utilizzata per creare una lista contenente tutti i nodi ordinati in bas
 ## **Local Search**
 - ## **2-OPT**
     ### def ls_2_opt(attr_tour):
-
+    Inizialmente viane fatta una *deepcopy* del tour in input, in seguito vengono utilizzati due cicli in cascata per effettuare tutti gli scambi 2-opt validi.
+    Infine tramite la funzione *satisfaction_calc* si confrontano il percorso trovato con quello migliore.
+    > Si restituisce il percorso con il gradimento maggiore
 
 - ## **Double Bridge**
     ### def ls_double_bridge(attr_tour):
-# 
-## **Principal Function**
-### def greedy_randomized_adaptive_search_procedure(start_tour, iterations, greediness_value):
+    Inizialmente vengono fatte due *deepcopy* del tour in input, in seguito vengono utilizzati quattro cicli in cascata per effettuare gli scambi.
+    Infine, tramite la funzione *satisfaction_calc* si confrontano il percorso trovato con quello migliore.
+    > Si restituisce il percorso con il gradimento maggiore
 
+# 
+## **Principal Functions**
+### def greedy_randomized_adaptive_search_procedure(start_tour, iterations, greediness_value):
+Questa è la funzione iniziale che viene lanciata dal programma **"Start.py"**.
+In ingresso riceve: una soluzione iniziale (calcolata con la funzione *first_op*), il numero di iterazioni della grasp, un valore compreso tra 0 e 1 che determina quanto l'algoritmo deve essere greedy oppure randomico.
+ 
 
 
 ### def find_solution(greediness_value, greedy):
