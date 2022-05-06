@@ -7,51 +7,54 @@ def satisfaction_calc(tour):
     n = 0
     for k in range(1,len(tour[0])):
         time += Xdata[tour[0][k-1],tour[0][k]]
-        if(fun.open_attr(tour[0][k], time/60)):
+        open = fun.open_attr(tour[0][k], time/60)
+        if(open == 0):
             sat += fun.Grad_pond[tour[0][k]]
         else:
-            n += 1 #numero di volte che un'attrazione del tour risulta chiusa *PENALITA'*
-            sat += 0
+            time += open #attrazione chiusa --> *PENALITA'* = aumenta il tempo trascorso
+
     tour[2] = time / 60
     M=max(fun.Grad_pond)
     m=min(fun.Grad_pond)
-    sat -= n * (M + m)/2
+    #sat -= penalty * (M + m)/2 #la penalità corrisponde all'aumento di tempo passato a causa dell'attesa che l'attrazione sia aperta
     tour[1] = sat
     return tour
 
 def first_op():
     
     seed=[[],float("inf"), float("-inf")]
-    sequence=[]
-    sequence.append(0)
+    sequence=[0]
     time=0
     
     while(True):
         n=0
-        candidate=[]
+        candidati=[]
 
         for i in range(len(fun.f["attrazioni"])):
             node=i+1   
-            if( (node not in sequence) and fun.open_attr(node, time/60) ):
-                candidate.append((fun.f["attrazioni"][i]["tw"]["t_inf"], Xdata[sequence[-1], node], node))
-        candidate=sorted(candidate, key=lambda x:x[1])
+            open = fun.open_attr(node, time/60)
+            if( (node not in sequence) and open == 0 ):
+                candidati.append((fun.f["attrazioni"][i]["tw"]["t_inf"], Xdata[sequence[-1], node], node))
+            elif (open > 0):
+                candidati.append((fun.f["attrazioni"][i]["tw"]["t_inf"], (Xdata[sequence[-1], node] + open), node))
         
-        while( n<len(candidate) and fun.end_tour(time/60, sequence[-1], candidate[n][2])):
-            n += 1
+        candidati=sorted(candidati, key=lambda x:(x[0],x[1])) #ordino la lista di candidati possibili in base a chi apre prima
+        
+        while( n<len(candidati) and fun.end_tour(time/60, sequence[-1], candidati[n][2])):
+            n += 1 
 
-        if(n > len(candidate) - 1):
+        if(n > len(candidati) - 1):
             break
 
-        next=candidate[n][2]
-        time += candidate[n][1]
-        sequence.append(next)
+        time += candidati[n][1]
+        sequence.append(candidati[n][2])
 
     sequence.append(0)
     
     seed[0] = sequence
     seed = satisfaction_calc(seed)
 
-    fun.write_res( seed, "start", 0 )
+    #fun.write_res( seed, "start", 0 )
     #fun.wexcel( seed, "start", 0 )
 
     return seed
@@ -66,7 +69,7 @@ def neighborhood(node = 0):
             continue
         rank.append( (Xdata[i,node], i) )
 
-    rank = sorted(rank)
+    rank.sort()
 
     return rank
 
@@ -108,7 +111,6 @@ def ls_2_opt(attr_tour):
             tour = satisfaction_calc(tour) 
             if (best_route[1] < tour[1]):
                 best_route = fun.deepcopy(tour)
-            
 
     return best_route
 

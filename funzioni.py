@@ -1,13 +1,7 @@
-import numpy as np
-import requests
-import json 
-import openpyxl as xl
-import folium
-import webbrowser as wb
-import random as r
+import numpy as np, requests, json , openpyxl as xl, webbrowser as wb, random as r, os, folium
 from copy import deepcopy
 from time import time 
-import os
+
 
 dist=np.loadtxt('distanze.txt', dtype=int).reshape((34,34))
 
@@ -30,7 +24,7 @@ def dist_home(): #utilizzo iniziale solo per calcolare le distanze albergo-attra
 
         home=f["utente"]
         start=str(home["x"])+", "+str(home["y"])
-        url="https://maps.googleapis.com/maps/api/distancematrix/json?"
+        url=""#"https://maps.googleapis.com/maps/api/distancematrix/json?"
 
         for j in range(len(f["attrazioni"])):
             dest=f["attrazioni"][j]["nome"]+", Ferrara, Italia"
@@ -43,10 +37,13 @@ def dist_home(): #utilizzo iniziale solo per calcolare le distanze albergo-attra
         return 0
 
 def open_attr(node, time): #verifico che una determinata attrazione sia aperta
-    if ( node==0 or (f["utente"]["t_inf"] + time) >= f["attrazioni"][node-1]["tw"]["t_inf"]  and  (f["utente"]["t_inf"] + time) <= f["attrazioni"][node-1]["tw"]["t_sup"] ):
-        return 1
-    else:
+    ora_attuale = f["utente"]["t_inf"] + time
+    apertura = f["attrazioni"][node-1]["tw"]["t_inf"]
+    chiusura = f["attrazioni"][node-1]["tw"]["t_sup"]
+    if ( node==0 or (ora_attuale >= apertura  and  ora_attuale <=  chiusura)):
         return 0
+    else:
+        return (apertura - ora_attuale) #se l'attrazione è chiusa ritorno il tempo che manca affinchè sia aperta
 
 def end_tour(time,a,b): #calcolo se rimane tempo per visitare l'attrazione e tornare all'albergo
     
