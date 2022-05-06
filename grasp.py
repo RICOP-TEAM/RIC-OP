@@ -139,10 +139,10 @@ def greedy_randomized_adaptive_search_procedure(start_tour, iterations, greedine
     count = 0
     best_solution = fun.deepcopy(start_tour)
 
-    # N 1 --> Neighbor + 2-opt      
-    # N 2 --> Neighbor + Double Bridge
-    # R 1 --> Ratio + 2-opt
-    # R 2 --> Ratio + Double Bridge
+    # N 1 --> Neighbor --> 2-opt      
+    # N 2 --> Neighbor --> 2-opt --> Double Bridge
+    # R 1 --> Ratio --> 2-opt 
+    # R 2 --> Ratio --> 2-opt --> double bridge
 
     greedy = str(input("\nChoose the Greedy Algorithm:\n -Press 'N' for Neighborhood greedy or 'R' for Ratio greedy.-\n"))
     ls = str(input("\nChoose the Local Search Algorithm:\n -Press '1' for 2-OPT or '2' for Double Bridge-\n"))
