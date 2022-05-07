@@ -14,9 +14,6 @@ def satisfaction_calc(tour):
             time += open #attrazione chiusa --> *PENALITA'* = aumenta il tempo trascorso
 
     tour[2] = time / 60
-    M=max(fun.Grad_pond)
-    m=min(fun.Grad_pond)
-    #sat -= penalty * (M + m)/2 #la penalità corrisponde all'aumento di tempo passato a causa dell'attesa che l'attrazione sia aperta
     tour[1] = sat
     return tour
 
@@ -139,51 +136,20 @@ def greedy_randomized_adaptive_search_procedure(start_tour, iterations, greedine
     count = 0
     best_solution = fun.deepcopy(start_tour)
 
-    # N 1 --> Neighbor --> 2-opt      
-    # N 2 --> Neighbor --> 2-opt --> Double Bridge
-    # R 1 --> Ratio --> 2-opt 
-    # R 2 --> Ratio --> 2-opt --> double bridge
+    # N -> Neighbor -> 2-opt + Double Bridge
+    # R -> Ratio -> 2-opt + Double Bridge
+
 
     greedy = str(input("\nChoose the Greedy Algorithm:\n -Press 'N' for Neighborhood greedy or 'R' for Ratio greedy.-\n"))
-    ls = str(input("\nChoose the Local Search Algorithm:\n -Press '1' for 2-OPT or '2' for Double Bridge-\n"))
 
     while (count < iterations):
         
-        #start_time=fun.time()
-
-        if(ls == '1'):
-            candidate = ls_2_opt(find_solution(greediness_value, greedy)) 
-        elif(ls == '2'):
-            candidate = ls_double_bridge(find_solution(greediness_value, greedy))
+        candidate = ls_double_bridge( ls_2_opt( find_solution(greediness_value, greedy) ) )
     
-        '''
-            if (candidate[1] > best_solution[1]):
-                best_solution = fun.deepcopy(candidate) 
-                a = 0
-            elif(candidate[1] == best_solution[1] and candidate[2] < best_solution[2]):
-                best_solution = fun.deepcopy(candidate) 
-                a = 0
-            else:
-                a = 1
-        '''
-    
-        '''
-                rcl_list = []
-                start_time=t.time()
-                for i in range(0, n_sol):
-                    rcl_list.append(find_solution(greediness_value ))
-                #candidate = int(fun.r.sample(list(range(0,rcl)), 1)[0]) #viene presa una soluzione candidato in modo casuale
-                rcl_list = sorted(rcl_list[:],key=lambda x:x[1], reverse=True)
-
-                for candidate in range(10): #-----> DIFFERENZA SOSTANZIALE RISPETTO ALLE PRECEDENTI RIGHE
-                    start_tour=ls_2_opt(rcl_list[candidate])
-                    if (start_tour[1] > best_solution[1]):
-                        best_solution = fun.deepcopy(start_tour) 
-        '''
         if ( (candidate[1] / candidate[2]) > (best_solution[1] / best_solution[2]) ):
             best_solution = fun.deepcopy(candidate)
             count += 1
-            fun.write_res( best_solution, (str(greedy)+str(ls)), count )
+            fun.write_res( best_solution, (str(greedy)), count )
             print('Iteration =', count, '-> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
 
     print("Best Solution =\n", best_solution)
@@ -192,8 +158,7 @@ def greedy_randomized_adaptive_search_procedure(start_tour, iterations, greedine
 def find_solution(greediness_value, greedy):
     seed = [[],float("inf"), float("-inf")]
     
-    sequence = []
-    sequence.append(0)
+    sequence = [0]
     
     remaining = []
     remaining=list(u for u in range(1,Xdata.shape[0]))
@@ -217,7 +182,6 @@ def find_solution(greediness_value, greedy):
             elif(greedy == 'R'):
                 next = ratio(sequence[-1])
               
-
             while ( (next[count][1] in sequence) and count < 33 ):
                 count += 1
             if( count > 33 or ( len(sequence) > 2 and fun.end_tour(time/60,sequence[-1], next[count][1]) ) ):

@@ -9,8 +9,8 @@
         "nome": "Albergo",
         "x": 44.845352541105,
         "y": 11.612748736243,
-        "t_inf": 8,
-        "t_sup": 20,
+        "inizio": 8,
+        "fine": 20,
         "gradimento": {
             "Artistico": 4,
             "Culturale": 4,
@@ -61,10 +61,12 @@
             "nome": "Castello Estense",
             "x": 44.837866589381,
             "y": 11.619810531862,
-            "tw": {
-                "t_inf": 9,
-                "t_sup": 18
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 2,
                 "Culturale": 5,
@@ -78,10 +80,12 @@
             "nome": "Cattedrale di San Giorgio",
             "x": 44.835773166735,
             "y": 11.620995529482,
-            "tw": {
-                "t_inf": 10,
-                "t_sup": 20
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 4,
@@ -95,10 +99,12 @@
             "nome": "Palazzo Diamanti",
             "x": 44.842218703269,
             "y": 11.621250955142,
-            "tw": {
-                "t_inf": 11,
-                "t_sup": 21
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 4,
                 "Culturale": 3,
@@ -112,10 +118,12 @@
             "nome": "Palazzo Municipale",
             "x": 44.835942744127,
             "y": 11.619114049058,
-            "tw": {
-                "t_inf": 9,
-                "t_sup": 14
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 4,
                 "Culturale": 5,
@@ -129,10 +137,12 @@
             "nome": "Palazzo Schifanoia",
             "x": 44.830591320519,
             "y": 11.629205143501,
-            "tw": {
-                "t_inf": 10,
-                "t_sup": 20
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 3,
@@ -146,10 +156,12 @@
             "nome": "Acquedotto",
             "x": 44.837734284516,
             "y": 11.608104768634,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 3,
                 "Culturale": 2,
@@ -163,10 +175,12 @@
             "nome": "Museo Ebraico",
             "x": 44.835677258845,
             "y": 11.613432326306,
-            "tw": {
-                "t_inf": 10,
-                "t_sup": 18
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 3,
@@ -180,10 +194,12 @@
             "nome": "Cimitero Monumentale della Certosa",
             "x": 44.844649323724,
             "y": 11.626624386528,
-            "tw": {
-                "t_inf": 9,
-                "t_sup": 20
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 5,
@@ -197,10 +213,12 @@
             "nome": "Cimitero Ebraico",
             "x": 44.843611928663,
             "y": 11.630303412814,
-            "tw": {
-                "t_inf": 11,
-                "t_sup": 16
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 3,
                 "Culturale": 5,
@@ -214,10 +232,12 @@
             "nome": "Casa di Ludovico Ariosto",
             "x": 44.844534326105,
             "y": 11.616980816518,
-            "tw": {
-                "t_inf": 10,
-                "t_sup": 20
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 3,
                 "Culturale": 4,
@@ -231,10 +251,12 @@
             "nome": "Orto Botanico",
             "x": 44.842176310014,
             "y": 11.622407655147,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 1,
                 "Culturale": 3,
@@ -248,10 +270,12 @@
             "nome": "Mura",
             "x": 44.835020250734,
             "y": 11.613318944826,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 1,
                 "Culturale": 2,
@@ -265,10 +289,12 @@
             "nome": "Corso Ercole I D'Este",
             "x": 44.843275351132,
             "y": 11.621821926306,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 4,
                 "Culturale": 2,
@@ -282,10 +308,12 @@
             "nome": "Via delle Volte",
             "x": 44.8324914767,
             "y": 11.620012177893,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 4,
                 "Culturale": 2,
@@ -299,10 +327,12 @@
             "nome": "Parco Massari",
             "x": 44.843263908097,
             "y": 11.62396136255,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 1,
                 "Culturale": 1,
@@ -316,10 +346,12 @@
             "nome": "Parco Urbano",
             "x": 44.85232861955,
             "y": 11.620680899322,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 0,
                 "Culturale": 0,
@@ -333,10 +365,12 @@
             "nome": "Parco Pareschi",
             "x": 44.834050379103,
             "y": 11.627354858846,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 0,
                 "Culturale": 0,
@@ -350,10 +384,12 @@
             "nome": "Piazza Ariostea",
             "x": 44.841434167962,
             "y": 11.62716012763,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 2,
                 "Culturale": 2,
@@ -367,10 +403,12 @@
             "nome": "Museo della Cattedrale",
             "x": 44.835051985457,
             "y": 11.620453737418,
-            "tw": {
-                "t_inf": 11,
-                "t_sup": 20
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 4,
@@ -384,10 +422,12 @@
             "nome": "Rotonda Foschini",
             "x": 44.837649529358,
             "y": 11.621074191386,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 4,
                 "Culturale": 1,
@@ -401,10 +441,12 @@
             "nome": "Pizzeria Orsucci",
             "x": 44.831753452845,
             "y": 11.62415979747,
-            "tw": {
-                "t_inf": 13,
-                "t_sup": 14
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 1,
                 "Culturale": 4,
@@ -418,10 +460,12 @@
             "nome": "Tri Scalin",
             "x": 44.831873013324,
             "y": 11.613110783978,
-            "tw": {
-                "t_inf": 13,
-                "t_sup": 14
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 1,
                 "Culturale": 4,
@@ -435,10 +479,12 @@
             "nome": "Teatro Nuovo",
             "x": 44.835023735945,
             "y": 11.620695112814,
-            "tw": {
-                "t_inf": 16,
-                "t_sup": 21
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 4,
@@ -452,10 +498,12 @@
             "nome": "Teatro Comunale",
             "x": 44.837789008052,
             "y": 11.621196812286,
-            "tw": {
-                "t_inf": 11,
-                "t_sup": 20
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 4,
@@ -469,10 +517,12 @@
             "nome": "UCI Cinemas",
             "x": 44.836731099514,
             "y": 11.602913202498,
-            "tw": {
-                "t_inf": 15,
-                "t_sup": 23
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 4,
@@ -486,10 +536,12 @@
             "nome": "Cinema Apollo",
             "x": 44.832916592505,
             "y": 11.619449120222,
-            "tw": {
-                "t_inf": 15,
-                "t_sup": 23
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 5,
                 "Culturale": 4,
@@ -503,10 +555,12 @@
             "nome": "College",
             "x": 44.84563803731,
             "y": 11.615789754543,
-            "tw": {
-                "t_inf": 20,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 2,
                 "Culturale": 1,
@@ -520,10 +574,12 @@
             "nome": "Renfe",
             "x": 44.82396850535,
             "y": 11.608986479217,
-            "tw": {
-                "t_inf": 20,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 2,
                 "Culturale": 1,
@@ -537,10 +593,12 @@
             "nome": "Centro Commerciale 'Il Castello'",
             "x": 44.816016283618,
             "y": 11.606233568105,
-            "tw": {
-                "t_inf": 10,
-                "t_sup": 21
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 2,
                 "Culturale": 2,
@@ -554,10 +612,12 @@
             "nome": "Centro Commerciale 'Le Mura'",
             "x": 44.8444194492,
             "y": 11.649376712286,
-            "tw": {
-                "t_inf": 10,
-                "t_sup": 21
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 2,
                 "Culturale": 2,
@@ -571,10 +631,12 @@
             "nome": "CUS",
             "x": 44.851753800027,
             "y": 11.61307056017,
-            "tw": {
-                "t_inf": 9,
-                "t_sup": 20
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 0,
                 "Culturale": 0,
@@ -588,10 +650,12 @@
             "nome": "Campetto Schiaccia Noci",
             "x": 44.841420072667,
             "y": 11.645367038956,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 0,
                 "Culturale": 0,
@@ -605,10 +669,12 @@
             "nome": "Campetto Barco",
             "x": 44.860721569216,
             "y": 11.606554803994,
-            "tw": {
-                "t_inf": 0,
-                "t_sup": 24
-            },
+            "orari":[
+                {"apre": 8,
+                 "chiude": 20},
+                {"apre": 8,
+                 "chiude": 20}
+            ],
             "gradimento": {
                 "Artistico": 0,
                 "Culturale": 0,
