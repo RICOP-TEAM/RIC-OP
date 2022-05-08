@@ -62,10 +62,8 @@
             "x": 44.837866589381,
             "y": 11.619810531862,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 10,
+                 "chiude": 18}
             ],
             "gradimento": {
                 "Artistico": 2,
@@ -82,9 +80,7 @@
             "y": 11.620995529482,
             "orari":[
                 {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                 "chiude": 19}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -100,10 +96,8 @@
             "x": 44.842218703269,
             "y": 11.621250955142,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 9,
+                 "chiude": 19}
             ],
             "gradimento": {
                 "Artistico": 4,
@@ -120,9 +114,7 @@
             "y": 11.619114049058,
             "orari":[
                 {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                 "chiude": 18}
             ],
             "gradimento": {
                 "Artistico": 4,
@@ -138,10 +130,8 @@
             "x": 44.830591320519,
             "y": 11.629205143501,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 10,
+                 "chiude": 19}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -157,10 +147,8 @@
             "x": 44.837734284516,
             "y": 11.608104768634,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 3,
@@ -176,10 +164,8 @@
             "x": 44.835677258845,
             "y": 11.613432326306,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 10,
+                 "chiude": 18}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -195,10 +181,8 @@
             "x": 44.844649323724,
             "y": 11.626624386528,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 7,
+                 "chiude": 17}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -214,10 +198,8 @@
             "x": 44.843611928663,
             "y": 11.630303412814,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 9,
+                 "chiude": 16}
             ],
             "gradimento": {
                 "Artistico": 3,
@@ -233,10 +215,10 @@
             "x": 44.844534326105,
             "y": 11.616980816518,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 10,
+                 "chiude": 12},
+                {"apre": 16,
+                 "chiude": 18}
             ],
             "gradimento": {
                 "Artistico": 3,
@@ -252,10 +234,8 @@
             "x": 44.842176310014,
             "y": 11.622407655147,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 10,
+                 "chiude": 13}
             ],
             "gradimento": {
                 "Artistico": 1,
@@ -271,10 +251,8 @@
             "x": 44.835020250734,
             "y": 11.613318944826,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 1,
@@ -290,10 +268,8 @@
             "x": 44.843275351132,
             "y": 11.621821926306,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 4,
@@ -309,10 +285,8 @@
             "x": 44.8324914767,
             "y": 11.620012177893,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 4,
@@ -328,8 +302,6 @@
             "x": 44.843263908097,
             "y": 11.62396136255,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
                 {"apre": 8,
                  "chiude": 20}
             ],
@@ -347,10 +319,8 @@
             "x": 44.85232861955,
             "y": 11.620680899322,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 0,
@@ -366,9 +336,7 @@
             "x": 44.834050379103,
             "y": 11.627354858846,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
+                {"apre": 7,
                  "chiude": 20}
             ],
             "gradimento": {
@@ -385,10 +353,8 @@
             "x": 44.841434167962,
             "y": 11.62716012763,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 2,
@@ -404,10 +370,10 @@
             "x": 44.835051985457,
             "y": 11.620453737418,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 9,
+                 "chiude": 13},
+                {"apre": 15,
+                 "chiude": 18}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -423,10 +389,8 @@
             "x": 44.837649529358,
             "y": 11.621074191386,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 4,
@@ -442,10 +406,8 @@
             "x": 44.831753452845,
             "y": 11.62415979747,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 18,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 1,
@@ -461,10 +423,10 @@
             "x": 44.831873013324,
             "y": 11.613110783978,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 12,
+                 "chiude": 14},
+                {"apre": 19,
+                 "chiude": 23}
             ],
             "gradimento": {
                 "Artistico": 1,
@@ -480,10 +442,10 @@
             "x": 44.835023735945,
             "y": 11.620695112814,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 11,
+                 "chiude": 13},
+                {"apre": 16,
+                 "chiude": 19}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -499,10 +461,10 @@
             "x": 44.837789008052,
             "y": 11.621196812286,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 11,
+                 "chiude": 13},
+                {"apre": 16,
+                 "chiude": 19}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -518,10 +480,8 @@
             "x": 44.836731099514,
             "y": 11.602913202498,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 17,
+                 "chiude": 23}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -537,10 +497,8 @@
             "x": 44.832916592505,
             "y": 11.619449120222,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 20,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 5,
@@ -556,10 +514,8 @@
             "x": 44.84563803731,
             "y": 11.615789754543,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 5}
             ],
             "gradimento": {
                 "Artistico": 2,
@@ -575,10 +531,8 @@
             "x": 44.82396850535,
             "y": 11.608986479217,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 4}
             ],
             "gradimento": {
                 "Artistico": 2,
@@ -594,10 +548,8 @@
             "x": 44.816016283618,
             "y": 11.606233568105,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 9,
+                 "chiude": 21}
             ],
             "gradimento": {
                 "Artistico": 2,
@@ -613,10 +565,8 @@
             "x": 44.8444194492,
             "y": 11.649376712286,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 9,
+                 "chiude": 21}
             ],
             "gradimento": {
                 "Artistico": 2,
@@ -632,10 +582,8 @@
             "x": 44.851753800027,
             "y": 11.61307056017,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 7,
+                 "chiude": 23}
             ],
             "gradimento": {
                 "Artistico": 0,
@@ -651,10 +599,8 @@
             "x": 44.841420072667,
             "y": 11.645367038956,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 0,
@@ -670,10 +616,8 @@
             "x": 44.860721569216,
             "y": 11.606554803994,
             "orari":[
-                {"apre": 8,
-                 "chiude": 20},
-                {"apre": 8,
-                 "chiude": 20}
+                {"apre": 0,
+                 "chiude": 24}
             ],
             "gradimento": {
                 "Artistico": 0,

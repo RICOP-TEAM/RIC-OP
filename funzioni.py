@@ -20,16 +20,16 @@ def dist_home(): #utilizzo iniziale solo per calcolare le distanze albergo-attra
 
     try:
         with open("API_orienteering-fe.txt","r") as api:
-            api_key=api.read()
+            api_key = api.read()
 
-        home=f["utente"]
-        start=str(home["x"])+", "+str(home["y"])
-        url=""#"https://maps.googleapis.com/maps/api/distancematrix/json?"
+        home = f["utente"]
+        start = str(home["x"]) + ", " + str(home["y"])
+        url = "" #"https://maps.googleapis.com/maps/api/distancematrix/json?"
 
         for j in range(len(f["attrazioni"])):
-            dest=f["attrazioni"][j]["nome"]+", Ferrara, Italia"
-            r=requests.get(url + "&origins=" + start + "&destinations=" + dest + "&mode=walking" + "&transit_routing_preference=less_walking" + "&language=ita" + "&key=" + api_key)
-            dist[0,j+1] = dist[j+1,0]= round(r.json()["rows"][0]["elements"][0]["duration"]["value"]/60)
+            dest = f["attrazioni"][j]["nome"] + ", Ferrara, Italia"
+            r = requests.get(url + "&origins=" + start + "&destinations=" + dest + "&mode=walking" + "&transit_routing_preference=less_walking" + "&language=ita" + "&key=" + api_key)
+            dist[0,j+1] = dist[j+1,0] = round(r.json()["rows"][0]["elements"][0]["duration"]["value"]/60)
         
         return 1
 
@@ -37,18 +37,28 @@ def dist_home(): #utilizzo iniziale solo per calcolare le distanze albergo-attra
         return 0
 
 def open_attr(node, time): #verifico che una determinata attrazione sia aperta
-    ora_attuale = f["utente"]["t_inf"] + time
-    apertura = f["attrazioni"][node-1]["tw"]["t_inf"]
-    chiusura = f["attrazioni"][node-1]["tw"]["t_sup"]
-    if ( node==0 or (ora_attuale >= apertura  and  ora_attuale <=  chiusura)):
-        return 0
-    else:
-        return (apertura - ora_attuale) #se l'attrazione è chiusa ritorno il tempo che manca affinchè sia aperta
+
+    ora_attuale = f["utente"]["inizio"] + time
+
+    for i in range(len(f["attrazioni"][node-1]["orari"])):
+        apertura = f["attrazioni"][node-1]["orari"][i]["apertura"]
+        chiusura = f["attrazioni"][node-1]["orari"][i]["chiusura"]
+        if (apertura <= ora_attuale < chiusura):
+            return 0
+        elif(i==0 and ora_attuale < apertura):
+            return (apertura - ora_attuale)*60 
+    if(ora_attuale > chiusura):
+        return (24 + apertura - ora_attuale)*60
+    elif(ora_attuale < apertura):
+        return (apertura - ora_attuale)*60
+
+    #se l'attrazione è chiusa ritorno il tempo che manca affinchè sia aperta
+    #restituisco il risultato in minuti
 
 def end_tour(time,a,b): #calcolo se rimane tempo per visitare l'attrazione e tornare all'albergo
     
-    t_tot=f["utente"]["t_sup"]-f["utente"]["t_inf"]
-    t_pass= time + (dist[a,b] + dist[b,0])/60
+    t_tot = f["utente"]["fine"] - f["utente"]["inizio"]
+    t_pass = time + (dist[a,b] + dist[b,0] + open_attr(b, time))/60
     #tempo.passato = tempo.posti.già.visitati + (tempo.pross.attrazione + tempo.ritorno.albergo)
     if( t_tot >= t_pass):
         return 0
@@ -158,7 +168,6 @@ def clear_route(): #ripulisco il file geojson contenente il percorso della soluz
     }
     
     r_default["features"][0]["geometry"]["coordinates"].append([f["utente"]["y"],f["utente"]["x"]])
-
 
     with open("percorso.geojson", "w") as js:
         json.dump(r_default, js, indent=4)

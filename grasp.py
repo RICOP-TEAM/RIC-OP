@@ -31,9 +31,9 @@ def first_op():
             node=i+1   
             open = fun.open_attr(node, time/60)
             if( (node not in sequence) and open == 0 ):
-                candidati.append((fun.f["attrazioni"][i]["tw"]["t_inf"], Xdata[sequence[-1], node], node))
+                candidati.append((fun.f["attrazioni"][i]["orari"][0]["apre"], Xdata[sequence[-1], node], node))
             elif (open > 0):
-                candidati.append((fun.f["attrazioni"][i]["tw"]["t_inf"], (Xdata[sequence[-1], node] + open), node))
+                candidati.append((fun.f["attrazioni"][i]["orari"][0]["apre"], (Xdata[sequence[-1], node] + open), node))
         
         candidati=sorted(candidati, key=lambda x:(x[0],x[1])) #ordino la lista di candidati possibili in base a chi apre prima
         
