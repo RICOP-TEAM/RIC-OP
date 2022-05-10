@@ -41,8 +41,8 @@ def open_attr(node, time): #verifico che una determinata attrazione sia aperta
     ora_attuale = f["utente"]["inizio"] + time
 
     for i in range(len(f["attrazioni"][node-1]["orari"])):
-        apertura = f["attrazioni"][node-1]["orari"][i]["apertura"]
-        chiusura = f["attrazioni"][node-1]["orari"][i]["chiusura"]
+        apertura = f["attrazioni"][node-1]["orari"][i]["apre"]
+        chiusura = f["attrazioni"][node-1]["orari"][i]["chiude"]
         if (apertura <= ora_attuale < chiusura):
             return 0
         elif(i==0 and ora_attuale < apertura):
@@ -51,7 +51,6 @@ def open_attr(node, time): #verifico che una determinata attrazione sia aperta
         return (24 + apertura - ora_attuale)*60
     elif(ora_attuale < apertura):
         return (apertura - ora_attuale)*60
-
     #se l'attrazione è chiusa ritorno il tempo che manca affinchè sia aperta
     #restituisco il risultato in minuti
 
@@ -59,7 +58,7 @@ def end_tour(time,a,b): #calcolo se rimane tempo per visitare l'attrazione e tor
     
     t_tot = f["utente"]["fine"] - f["utente"]["inizio"]
     t_pass = time + (dist[a,b] + dist[b,0] + open_attr(b, time))/60
-    #tempo.passato = tempo.posti.già.visitati + (tempo.pross.attrazione + tempo.ritorno.albergo)
+    #tempo.passato = tempo.posti.già.visitati + (tempo.pross.attrazione + tempo.ritorno.albergo + penalità se attr chiusa)
     if( t_tot >= t_pass):
         return 0
     else:
@@ -173,3 +172,60 @@ def clear_route(): #ripulisco il file geojson contenente il percorso della soluz
         json.dump(r_default, js, indent=4)
     
     return 1
+
+def time_and_sat_calc(tour):
+    sat = 0
+    time = 0
+
+    for k in range(1,len(tour[0])):
+        time += dist[tour[0][k-1],tour[0][k]]
+        open = open_attr(tour[0][k], time/60)
+        if(end_tour(time/60, tour[0][k-1], tour[0][k])):
+            break
+        elif(open == 0):
+            sat += Grad_pond[tour[0][k]]
+        else:
+            time += open #attrazione chiusa --> *PENALITA'* = aumenta il tempo trascorso
+
+    tour[2] = time / 60
+    tour[1] = sat
+    return tour
+
+def first_op():
+    
+    seed=[[],float("inf"), float("-inf")]
+    sequence=[0]
+    time=0
+    
+    while(True):
+        n=0
+        candidati=[]
+
+        for i in range(len(f["attrazioni"])):
+            node = i+1   
+            open = open_attr(node, time/60)
+            if (node not in sequence):
+                if (open == 0):
+                    candidati.append((f["attrazioni"][i]["orari"][0]["apre"], dist[sequence[-1], node], node))
+                elif (open > 0):            
+                    candidati.append((f["attrazioni"][i]["orari"][0]["apre"], (dist[sequence[-1], node] + open), node))
+        candidati = sorted(candidati, key=lambda x:(x[0],x[1])) #ordino la lista di candidati possibili in base a chi apre prima
+        
+        while( n<len(candidati) and end_tour(time/60, sequence[-1], candidati[n][2])):
+            n += 1 
+
+        if(n > len(candidati) - 1):
+            break
+
+        time += candidati[n][1]
+        sequence.append(candidati[n][2])
+
+    sequence.append(0)
+    
+    seed[0] = sequence
+    seed = time_and_sat_calc(seed)
+
+    #fun.write_res( seed, "start", 0 )
+    #fun.wexcel( seed, "start", 0 )
+
+    return seed

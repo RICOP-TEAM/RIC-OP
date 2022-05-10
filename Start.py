@@ -1,7 +1,6 @@
-from os import rmdir
 import funzioni as fun
 from grasp import greedy_randomized_adaptive_search_procedure as g
-from grasp import first_op as FOp
+from funzioni import first_op as FOp
 
 #inizializzazione albergo
 '''
@@ -31,7 +30,7 @@ fun.os.mkdir("Solutions")
     
 #eseguo i vari algoritmi
 res=[]
-res.append( g(start_tour = FOp(), iterations = 1000, greediness_value = 0.5) )
+res.append( g(start_tour = FOp(), iterations = 500, greediness_value = 0.5) )
 
 
 #print("Ratio:\n",res[0], "\n\n1_Open:\n", res[1], "\n\nNeighbors:\n",res[2], end="\n\n\n---FINE---")
