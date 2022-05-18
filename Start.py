@@ -30,7 +30,7 @@ fun.os.mkdir("Solutions")
     
 #eseguo i vari algoritmi
 res=[]
-res.append( g(start_tour = FOp(), iterations = 500, greediness_value = 0.5) )
+res.append( g(iterations = 500, greediness_value = 0.5) )
 
 
 #print("Ratio:\n",res[0], "\n\n1_Open:\n", res[1], "\n\nNeighbors:\n",res[2], end="\n\n\n---FINE---")

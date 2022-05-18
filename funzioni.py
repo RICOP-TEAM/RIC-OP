@@ -3,7 +3,7 @@ from copy import deepcopy
 from time import time 
 
 
-dist=np.loadtxt('distanze.txt', dtype=int).reshape((34,34))
+dist = np.loadtxt('distanze.txt', dtype=int).reshape((34,34))
 
 with open("InputCompleto.json") as js:
     f=json.load(js)
@@ -46,18 +46,18 @@ def open_attr(node, time): #verifico che una determinata attrazione sia aperta
         if (apertura <= ora_attuale < chiusura):
             return 0
         elif(i==0 and ora_attuale < apertura):
-            return (apertura - ora_attuale)*60 
-    if(ora_attuale > chiusura):
-        return (24 + apertura - ora_attuale)*60
-    elif(ora_attuale < apertura):
-        return (apertura - ora_attuale)*60
+            return float((apertura - ora_attuale)*60) 
+    if(ora_attuale >= chiusura):
+        return float((24 + apertura - ora_attuale)*60)
+    elif(ora_attuale <= apertura):
+        return float((apertura - ora_attuale)*60)
     #se l'attrazione è chiusa ritorno il tempo che manca affinchè sia aperta
     #restituisco il risultato in minuti
 
 def end_tour(time,a,b): #calcolo se rimane tempo per visitare l'attrazione e tornare all'albergo
     
     t_tot = f["utente"]["fine"] - f["utente"]["inizio"]
-    t_pass = time + (dist[a,b] + dist[b,0] + open_attr(b, time))/60
+    t_pass = time + ( (dist[a,b] + dist[b,0] + open_attr(b, time)) /60 )
     #tempo.passato = tempo.posti.già.visitati + (tempo.pross.attrazione + tempo.ritorno.albergo + penalità se attr chiusa)
     if( t_tot >= t_pass):
         return 0
@@ -178,14 +178,16 @@ def time_and_sat_calc(tour):
     time = 0
 
     for k in range(1,len(tour[0])):
-        time += dist[tour[0][k-1],tour[0][k]]
+        
         open = open_attr(tour[0][k], time/60)
+        time = time + (dist[tour[0][k-1],tour[0][k]] + open)
+        
+        if (tour[0][k] not in tour[0][0:k]): #se ancora non è stata visitata l'attrazione aggiungo il gradimento
+            sat += Grad_pond[tour[0][k]]
+
         if(end_tour(time/60, tour[0][k-1], tour[0][k])):
             break
-        elif(open == 0):
-            sat += Grad_pond[tour[0][k]]
-        else:
-            time += open #attrazione chiusa --> *PENALITA'* = aumenta il tempo trascorso
+
 
     tour[2] = time / 60
     tour[1] = sat

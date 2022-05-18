@@ -1,21 +1,32 @@
 #Simple GRASP with two type of greedy, a VNS algorithm can be used
 import funzioni as fun
 from funzioni import dist as Xdata
-from vns import variable_neighborhood_search as vns 
+from vns import variable_neighborhood_search as vns
 
 #Greedy
-def neighborhood(node = 0):
-
-    rank = [] 
+def neighborhood(node, time, alfa):
+    
+    rank = []
+    rcl = [] 
     for i in range(1, Xdata.shape[0]):
         if (i == node) :
             continue
-        rank.append( (Xdata[i,node], i) )
+        d = (Xdata[i,node] + fun.open_attr(i,time))
+        rank.append( (d, i) )
+        
+    #costruzione rcl
+    
+    m = min(rank, key=lambda x:x[0])[0]
+    M = max(rank, key=lambda x:x[0])[0]
+    
+    for i in range(len(rank)):
+        if(rank[i][0] <= m + alfa*(M-m)):
+            rcl.append(rank[i])
 
-    rank.sort()
+    return rcl
 
-    return rank
-
+"""
+#Restituisce una lista di nodi ordinati in base al rapporto di gradimento ponderato e distanza con il nodo passato in input
 def ratio(node = 0): 
 
     candidate = []
@@ -37,8 +48,9 @@ def ratio(node = 0):
 
     return candidate
 #-
+"""
 
-#Local Search
+#Local Search : Ricerca esaustiva degli ottimi locali
 def ls_2_opt(attr_tour):
 
     best_route = fun.deepcopy(attr_tour)
@@ -50,15 +62,15 @@ def ls_2_opt(attr_tour):
                 continue
             tour[0][(i+1):(j+1)] = list(reversed(tour[0][(i+1):(j+1)])) #inverto una parte della lista perchè scambio gli archi
             tour = fun.time_and_sat_calc(tour) 
-            if (best_route[1] < tour[1]):
+            if (best_route[1]/best_route[2] < tour[1]/tour[2]):
                 best_route = fun.deepcopy(tour)
 
     return best_route
 
 def ls_double_bridge(attr_tour):
 
-    tour=fun.deepcopy(attr_tour)
-    best_route=fun.deepcopy(tour)
+    tour = fun.deepcopy(attr_tour)
+    best_route = fun.deepcopy(tour)
 
     for i in range(0,len(tour[0])-7):
         for j in range(i+2,len(tour[0])-5):
@@ -68,27 +80,32 @@ def ls_double_bridge(attr_tour):
                         continue
                     tour[0] = list(attr_tour[0][:(i+1)] + attr_tour[0][(k+1):(l+1)] + attr_tour[0][(j+1):(k+1)] + attr_tour[0][(i+1):(j+1)] + attr_tour[0][(l+1):])
                     tour = fun.time_and_sat_calc(tour)
-                    if (best_route[1] < tour[1]):
+                    if (best_route[1]/best_route[2] < tour[1]/tour[2]):
                         best_route = fun.deepcopy(tour)
     
     return best_route
 #-
 
 #Principal Function
-def greedy_randomized_adaptive_search_procedure(start_tour, iterations, greediness_value):
+def greedy_randomized_adaptive_search_procedure(iterations, alfa):
+    
     count = 0
+    start_tour = fun.first_op()
     best_solution = fun.deepcopy(start_tour)
 
-    greedy = str(input(
-        "\nChoose the Greedy Algorithm:\n -Press 'N' for Neighborhood greedy or 'R' for Ratio greedy.-\n"))
+    ls = int(input("\nPress 1 to use VNS, otherwise press 0 \n"))
 
-    while (count < iterations):
-        first_sol = find_solution(greediness_value, greedy)
-        #local search without VNS
-        candidate = ls_double_bridge( ls_2_opt( first_sol ) )
-        #local search with VNS
-        candidate = vns(Xdata, first_sol)
-
+    while (iterations > count):
+        #Creating one solution with one of the two greedy
+        first_sol = find_solution(alfa)
+        #LS
+        if(ls == 0):
+            #local search without VNS
+            candidate = ls_double_bridge( ls_2_opt( first_sol ) )
+        else:
+            #local search with VNS
+            candidate = vns(first_sol)
+        
         if ( (candidate[1] / candidate[2]) > (best_solution[1] / best_solution[2]) ):
             best_solution = fun.deepcopy(candidate)
             count += 1
@@ -98,57 +115,31 @@ def greedy_randomized_adaptive_search_procedure(start_tour, iterations, greedine
     print("Best Solution =\n", best_solution)
     return best_solution
 
-def find_solution(greediness_value, greedy):
+
+def find_solution(alfa):
+
     seed = [[],float("inf"), float("-inf")]
-    
     sequence = [0]
-    
-    remaining = []
-    remaining = list(u for u in range(1,Xdata.shape[0]))#lista con i nodi che non sono presenti nella soluzione 
-    
     time = 0
-    
-    for i in range(0, Xdata.shape[0]-1):
-        count = 0
-        rand = round(fun.r.random(), 2) #coefficiente casuale con due cifre dopo la virgola
+ 
+    while(True):
+  
+        RCL = neighborhood(sequence[-1], time/60, alfa)
+        #prendo un elemento casuale dalla RCL
+        next = fun.r.choice(RCL)
 
-        if(len(remaining) == 1):#se rimane un solo nodo non visitato lo inserisco nel tour e chiudo il ciclo
-            time += Xdata[sequence[-1], remaining[0]]
-            sequence.append(remaining[0])
+        if( len(sequence) > 2 and fun.end_tour(time/60, sequence[-1], next[1]) ): 
             break
+        else:
+            time += next[0]
+            sequence.append(next[1])    
         
-        #greedy construction
-        if (rand <= greediness_value and len(sequence) < Xdata.shape[0]):
-            if(greedy == 'N' or 'n'):
-                next = neighborhood(sequence[-1]) 
-            elif(greedy == 'R' or 'r'):
-                next = ratio(sequence[-1])
-
-            while ( (next[count][1] in sequence) and count < 33 ):
-                count += 1
-            if( count > 33 or ( len(sequence) > 2 and fun.end_tour(time/60,sequence[-1], next[count][1]) ) ):
-                break
-            else:
-                time += next[count][0]
-                sequence.append(next[count][1])
-                remaining.remove(next[count][1])
-
-        #random construction
-        elif (rand > greediness_value and len(sequence) < Xdata.shape[0]):
-            next = int(fun.r.sample(remaining, 1)[0])
-            while next in sequence:
-                next = int(fun.r.sample(remaining, 1)[0])
-            if( len(sequence) > 2 and fun.end_tour(time/60,sequence[-1], next) ): #if there isn't other time to continue the tour we close the loop 
-                break
-            else:
-                time += Xdata[sequence[-1], next]
-                sequence.append(next)
-                remaining.remove(next)
     #solution created
     sequence.append(sequence[0])
     seed[0] = sequence
     seed = fun.time_and_sat_calc(seed)
     return seed
 
+
 #MAIN
-tour = greedy_randomized_adaptive_search_procedure(start_tour = fun.first_op() , iterations = 1000, greediness_value = 0.5)
+tour = greedy_randomized_adaptive_search_procedure(iterations = 1000, alfa = 0.5)
