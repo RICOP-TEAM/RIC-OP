@@ -8,13 +8,9 @@ dist = np.loadtxt('distanze.txt', dtype=int).reshape((34,34))
 with open("InputCompleto.json") as js:
     f=json.load(js)
 
-nome_attr=[]
-Grad_pond=[]
-Grad_pond.insert(0,0)
-
+Grad_pond=[0]
 for p in f["attrazioni"]: 
-        nome_attr.append(p["nome"])
-        Grad_pond.append(np.average(list(p["gradimento"].values()), weights=list(f["utente"]["gradimento"].values())))
+    Grad_pond.append(np.average(list(p["gradimento"].values()), weights=list(f["utente"]["gradimento"].values())))
 
 def dist_home(): #utilizzo iniziale solo per calcolare le distanze albergo-attrazione
 

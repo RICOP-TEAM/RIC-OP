@@ -2,7 +2,7 @@
 import funzioni as fun
 from funzioni import dist as Xdata
 from vns import variable_neighborhood_search as vns
-
+from path_relinking import path_relinking as p_rel
 #Greedy
 def neighborhood(node, time, alfa):
     
@@ -93,27 +93,33 @@ def greedy_randomized_adaptive_search_procedure(iterations, alfa):
     start_tour = fun.first_op()
     best_solution = fun.deepcopy(start_tour)
 
-    ls = int(input("\nPress 1 to use VNS, otherwise press 0 \n"))
+    s = int(input("\n Select what algorithms' sequence you want to use.\n1) GRASP with exaustive local search\n2) GRASP with stock-VNS\n3) (1) + Path Relinking\n4) (2) + Path Relinking\n"))
 
     while (iterations > count):
-        #Creating one solution with one of the two greedy
         first_sol = find_solution(alfa)
-        #LS
-        if(ls == 0):
-            #local search without VNS
+        
+        if(s == 1 or s == 3):
+            #exaustive local search
             candidate = ls_double_bridge( ls_2_opt( first_sol ) )
-        else:
-            #local search with VNS
+        elif(s == 2 or s == 4):
+            #stock-VNS
             candidate = vns(first_sol)
         
-        if ( (candidate[1] / candidate[2]) > (best_solution[1] / best_solution[2]) ):
+        if ( candidate[1] > best_solution[1] or (candidate[1] == best_solution[1] and candidate[2] < best_solution[2])):    #(candidate[1] / candidate[2]) > (best_solution[0][1] / best_solution[0][2])
             best_solution = fun.deepcopy(candidate)
             count += 1
             #fun.write_res( best_solution, (str(greedy)), count )
             print('Iteration =', count, '-> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
+        else:
+            count += 1
+            print('Iteration =', count, '\t--> The best solution is the same that was found in last iteration!')
+            if(s == 3 or s == 4):
+                bs = bs.p_rel(candidate, best_solution)
+                print("\n\t\tBut Path relinking helped to find a better solution...\n")
+                print('Iteration =', count, '-> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
 
-    print("Best Solution =\n", best_solution)
-    return best_solution
+    print("Best Solution =\n", bs)
+    return bs
 
 
 def find_solution(alfa):

@@ -1,26 +1,16 @@
-def remove_redundancy(self, solution):
-
-    for i in solution:
-        sol_aux = solution.copy()
-        sol_aux.remove(i)
-        if self.is_complete(sol_aux):
-            solution = sol_aux.copy()
-
-    return solution
-
+import funzioni as fun
 
 def path_relinking(self, initial_solution, final_solution):
 
     sym_dif = initial_solution.symmetric_difference(final_solution)
 
-    cost_init_sol = self.evaluate_solution(initial_solution)
-    cost_final_sol = self.evaluate_solution(final_solution)
+    initial_solution = fun.time_and_sat_calc(initial_solution)
+    final_solution = fun.time_and_sat_calc(final_solution)
 
-    best_cost = min(cost_init_sol, cost_final_sol)
+    best_cost = max(initial_solution[1], final_solution[1])
 
-    if cost_init_sol < cost_final_sol:
+    if initial_solution[1] > final_solution[1]:
         best_sol = initial_solution
-
     else:
         best_sol = final_solution
 
@@ -62,4 +52,3 @@ def path_relinking(self, initial_solution, final_solution):
         sym_dif.remove(best_i)
 
     return best_sol
-
