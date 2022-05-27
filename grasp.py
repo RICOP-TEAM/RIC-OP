@@ -114,9 +114,9 @@ def greedy_randomized_adaptive_search_procedure(iterations, alfa):
             count += 1
             print('Iteration =', count, '\t--> The best solution is the same that was found in last iteration!')
             if(s == 3 or s == 4):
-                bs = bs.p_rel(candidate, best_solution)
+                bs = p_rel(candidate, best_solution)
                 print("\n\t\tBut Path relinking helped to find a better solution...\n")
-                print('Iteration =', count, '-> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
+                print(' -> Satisfaction =', bs[1], ', Time =', bs[2])
 
     print("Best Solution =\n", bs)
     return bs

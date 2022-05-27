@@ -185,8 +185,8 @@ def time_and_sat_calc(tour):
             break
 
 
-    tour[2] = time / 60
-    tour[1] = sat
+    tour[2] = round(time / 60, 4)
+    tour[1] = round(sat,4)
     return tour
 
 def first_op():
@@ -225,5 +225,8 @@ def first_op():
 
     #fun.write_res( seed, "start", 0 )
     #fun.wexcel( seed, "start", 0 )
+
+    print(f"\n\nSOLUZIONE DI PARTENZA --> {seed}\n\n") 
+
 
     return seed
