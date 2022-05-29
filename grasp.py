@@ -3,6 +3,8 @@ import funzioni as fun
 from funzioni import dist as Xdata
 from vns import variable_neighborhood_search as vns
 from path_relinking import path_relinking as p_rel
+
+
 #Greedy
 def neighborhood(node, time, alfa):
     
@@ -120,11 +122,12 @@ def greedy_randomized_adaptive_search_procedure(iterations, alfa):
 
     print("Best Solution =\n", bs)
     return bs
+#-
 
-
+#Construciton of the initial solution
 def find_solution(alfa):
 
-    seed = [[],float("inf"), float("-inf")]
+    seed = []
     sequence = [0]
     time = 0
  
@@ -144,6 +147,7 @@ def find_solution(alfa):
     sequence.append(sequence[0])
     seed[0] = sequence
     seed = fun.time_and_sat_calc(seed)
+    
     return seed
 
 

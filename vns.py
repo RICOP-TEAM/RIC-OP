@@ -1,6 +1,4 @@
 import funzioni as fun
-from funzioni import dist as Xdata
-
 
 def stochastic_2_opt(tour):
     
@@ -22,18 +20,18 @@ def stochastic_2_opt(tour):
 
 def variable_neighborhood_search(tour, neighbourhood_size = 5):
 
-    solution = fun.deepcopy(tour)
-    count = 0
+    solution = fun.deepcopy(tour) #x=initial_solution
+    count = 0 #k=1
     
-    while (count < neighbourhood_size):
-       candidate = stochastic_2_opt(solution)
+    while (count < neighbourhood_size): #while k <= kmax do
+        candidate = stochastic_2_opt(solution) #shaking
 
-       if ( candidate[1] > solution[1] or (candidate[1] == solution[1] and candidate[2] < solution[2])):    #(candidate[1] / candidate[2]) > (best_solution[0][1] / best_solution[0][2])
-           solution = fun.deepcopy(candidate)
-           count = 0
+        if ( candidate[1] > solution[1] or (candidate[1] == solution[1] and candidate[2] < solution[2])): #if c(x')> c(x) then
+            solution = fun.deepcopy(candidate) #x = x'
+            count = 0 #k = 1
        
-       else:
-           count += 1                             
+        else:
+            count += 1 #k= k+1                            
      
     print(f"\n\nf\fSOLUZIONE stock-VNS --> {solution}\n\n") 
     
