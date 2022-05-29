@@ -33,7 +33,7 @@ def variable_neighborhood_search(tour, neighbourhood_size = 5):
         else:
             count += 1 #k= k+1                            
      
-    print(f"\n\nf\fSOLUZIONE stock-VNS --> {solution}\n\n") 
+    print(f"\n\nSOLUZIONE stock-VNS --> {solution}\n\n") 
     
     return solution
     

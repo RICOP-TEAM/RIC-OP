@@ -95,7 +95,7 @@ def greedy_randomized_adaptive_search_procedure(iterations, alfa):
     start_tour = fun.first_op()
     best_solution = fun.deepcopy(start_tour)
 
-    s = int(input("\n Select what algorithms' sequence you want to use.\n1) GRASP with exaustive local search\n2) GRASP with stock-VNS\n3) (1) + Path Relinking\n4) (2) + Path Relinking\n"))
+    s = int(input("\nSelect what algorithms' sequence you want to use.\n\n\t1) GRASP with exaustive local search\n\t2) GRASP with stock-VNS\n\t3) (1) + Path Relinking\n\t4) (2) + Path Relinking\n\n"))
 
     while (iterations > count):
         first_sol = find_solution(alfa)
@@ -127,7 +127,7 @@ def greedy_randomized_adaptive_search_procedure(iterations, alfa):
 #Construciton of the initial solution
 def find_solution(alfa):
 
-    seed = []
+    seed = [[], 0, 0]
     sequence = [0]
     time = 0
  
@@ -137,17 +137,26 @@ def find_solution(alfa):
         #prendo un elemento casuale dalla RCL
         next = fun.r.choice(RCL)
 
-        if( len(sequence) > 2 and fun.end_tour(time/60, sequence[-1], next[1]) ): 
+        while ( len(sequence) > 2 and fun.end_tour(time/60, sequence[-1], next[1]) ): 
+            #se trovo un'attrazione che non è raggiungibile dal nodo precedente allora la rimuovo dalla RCL e continuo a cercare se trovo una possibile attrazione da visitare
+            RCL.remove(next)
+            #se non trovo nessun elemento nella RCL allora esco dal ciclo
+            if (len(RCL) == 0):
+                break
+            next = fun.r.choice(RCL)
+        
+        #se la RCL è vuota allora non ho trovato nessuna possibile attrazione da visitare
+        if (len(RCL) == 0):
             break
-        else:
-            time += next[0]
-            sequence.append(next[1])    
+        
+        time += next[0]
+        sequence.append(next[1])    
         
     #solution created
     sequence.append(sequence[0])
     seed[0] = sequence
     seed = fun.time_and_sat_calc(seed)
-    
+
     return seed
 
 

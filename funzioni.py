@@ -42,11 +42,11 @@ def open_attr(node, time): #verifico che una determinata attrazione sia aperta
         if (apertura <= ora_attuale < chiusura):
             return 0
         elif(i==0 and ora_attuale < apertura):
-            return float((apertura - ora_attuale)*60) 
+            return int((apertura - ora_attuale)*60) 
     if(ora_attuale >= chiusura):
-        return float((24 + apertura - ora_attuale)*60)
+        return int((24 + apertura - ora_attuale)*60)
     elif(ora_attuale <= apertura):
-        return float((apertura - ora_attuale)*60)
+        return int((apertura - ora_attuale)*60)
     #se l'attrazione è chiusa ritorno il tempo che manca affinchè sia aperta
     #restituisco il risultato in minuti
 
