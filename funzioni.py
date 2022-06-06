@@ -68,7 +68,7 @@ def wexcel(tour, fun_name, iteration): #scrivo il risultato su un file excel
         
         ricerca['A1']='Num nodi visitati'
         ricerca['A1'].value
-        ricerca['A2']=len(tour[0])-1
+        ricerca['A2']=len(tour[0])-2 #N° attrazioni visitate oltre l'albergo
         ricerca['A2'].value
 
         ricerca['B1']="Gradimento:"
@@ -88,7 +88,7 @@ def wexcel(tour, fun_name, iteration): #scrivo il risultato su un file excel
             ricerca['E'+str(i+2)]=tour[0][i]
             ricerca['E'+str(i+2)].value
         
-        sheet.save('Solutions\\ricerca_'+fun_name+'_'+str(iteration)+'.xlsx')
+        sheet.save('Solutions\\ricerca_'+fun_name+'_#'+str(iteration)+'.xlsx')
         return 1
 
     except:
@@ -96,15 +96,34 @@ def wexcel(tour, fun_name, iteration): #scrivo il risultato su un file excel
 
 def write_res(tour, fun_name, iteration): #scrivo i risultati su un file excel e creo una mappa per ogni soluzione possibile trovata
 
-    map=folium.Map(location=[44.83895673644131, 11.614725304456822], zoom_start=14)
+    if fun_name == 1 :
+        fun_name = "Exaustive-GRASP"
+    elif fun_name == 2 :
+        fun_name = "GRASP&VNS"
+    elif fun_name == 3 :
+        fun_name = "ExGRASP&PR"
+    elif fun_name == 4 :
+        fun_name = "GRASP&VNS&PR"
+    
+    path = "C:\\Users\\luk8_\\Desktop\\MAGISTRALE\\Ricerca Operativa\\Progetto\\Solutions\\"+fun_name
+    if path.exists() == False:
+        os.mkdir()
+    
+    
+    map = folium.Map(location=[44.83895673644131, 11.614725304456822], zoom_start=14)
 
-    folium.Marker(location=[f["utente"]["x"],f["utente"]["y"]],popup="Albergo", tooltip=0, icon=folium.Icon(color="lightgreen",icon="home", prefix="fa")).add_to(map)
+    folium.Marker(
+        location = [f["utente"]["x"],f["utente"]["y"]],
+        popup = "Albergo", 
+        tooltip = 0, 
+        icon = folium.Icon(color="lightgreen",icon="home", prefix="fa")
+        ).add_to(map)
     
     for i in range(len(f["attrazioni"])):
         folium.Marker(
-            location=[f["attrazioni"][i]["x"],f["attrazioni"][i]["y"]],
-            popup=f["attrazioni"][i]["nome"],
-            icon=folium.Icon(color="darkred", icon="map", prefix="fa")
+            location = [f["attrazioni"][i]["x"],f["attrazioni"][i]["y"]],
+            popup = f["attrazioni"][i]["nome"],
+            icon = folium.Icon(color="darkred", icon="map", prefix="fa")
             ).add_to(map)
 
     wexcel(tour, fun_name, iteration)
@@ -115,14 +134,14 @@ def write_res(tour, fun_name, iteration): #scrivo i risultati su un file excel e
     
     for k in tour[0][1:-1]:
         folium.Marker(
-            location=[f["attrazioni"][(k-1)]["x"],f["attrazioni"][(k-1)]["y"]],
-            popup= f["attrazioni"][(k-1)]["nome"], 
-            tooltip= tour[0].index(k),
-            icon= folium.Icon(color="darkpurple", icon="map", prefix="fa")
+            location = [f["attrazioni"][(k-1)]["x"],f["attrazioni"][(k-1)]["y"]],
+            popup = f["attrazioni"][(k-1)]["nome"], 
+            tooltip = tour[0].index(k),
+            icon = folium.Icon(color="darkpurple", icon="map", prefix="fa")
             ).add_to(map)
 
-    map.save("C:\\Users\\luk8_\\Desktop\\MAGISTRALE\\Ricerca Operativa\\Progetto\\Solutions\\"+fun_name+"_"+str(iteration)+".html")
-    #wb.open("C:\\Users\\luk8_\\Desktop\\MAGISTRALE\\Ricerca Operativa\\Progetto\\Solutions\\"+fun_name+"_"+str(iteration)+".html")
+    map.save(path+"\\#"+str(iteration)+".html")
+    #wb.open(path+"\\#"+str(iteration)+".html")
     del(map)
 
 def route(tour): #scrivo le coordinate dei luoghi su un file geojson per poi creare la mappa
@@ -131,10 +150,10 @@ def route(tour): #scrivo le coordinate dei luoghi su un file geojson per poi cre
 
     try:
         with open("percorso.geojson") as js:
-            g=json.load(js)
+            g = json.load(js)
 
         for i in tour[0][1:-1]:
-            attr=[f["attrazioni"][(i-1)]["y"],f["attrazioni"][(i-1)]["x"]]
+            attr = [f["attrazioni"][(i-1)]["y"],f["attrazioni"][(i-1)]["x"]]
             g["features"][0]["geometry"]["coordinates"].append(attr)
 
         with open("percorso.geojson", "w") as js:
@@ -147,7 +166,7 @@ def route(tour): #scrivo le coordinate dei luoghi su un file geojson per poi cre
 
 def clear_route(): #ripulisco il file geojson contenente il percorso della soluzione predcedente
     
-    r_default={
+    r_default = {
         "type": "FeatureCollection",
         "features": [
         {
@@ -191,13 +210,13 @@ def time_and_sat_calc(tour):
 
 def first_op():
     
-    seed=[[],float("inf"), float("-inf")]
-    sequence=[0]
-    time=0
+    seed = [[],float("inf"), float("-inf")]
+    sequence = [0]
+    time = 0
     
     while(True):
-        n=0
-        candidati=[]
+        n = 0
+        candidati = []
 
         for i in range(len(f["attrazioni"])):
             node = i+1   

@@ -109,19 +109,21 @@ def greedy_randomized_adaptive_search_procedure(iterations, alfa):
         
         if ( candidate[1] > best_solution[1] or (candidate[1] == best_solution[1] and candidate[2] < best_solution[2])):    #(candidate[1] / candidate[2]) > (best_solution[0][1] / best_solution[0][2])
             best_solution = fun.deepcopy(candidate)
+            fun.write_res()
             count += 1
-            #fun.write_res( best_solution, (str(greedy)), count )
+            fun.write_res( best_solution, s, count )
             print('Iteration =', count, '-> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
         else:
             count += 1
             print('Iteration =', count, '\t--> The best solution is the same that was found in last iteration!')
             if(s == 3 or s == 4):
-                bs = p_rel(candidate, best_solution)
+                best_solution = p_rel(candidate, best_solution)
                 print("\n\t\tBut Path relinking helped to find a better solution...\n")
-                print(' -> Satisfaction =', bs[1], ', Time =', bs[2])
+                fun.write_res( best_solution, s, count )
+                print(' -> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
 
-    print("Best Solution =\n", bs)
-    return bs
+    print("Best Solution =\n", best_solution)
+    return best_solution
 #-
 
 #Construciton of the initial solution
