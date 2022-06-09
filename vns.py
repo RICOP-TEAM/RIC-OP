@@ -1,8 +1,21 @@
 import funzioni as fun
 
+def node_swap(tour):
+    route = fun.deepcopy(tour)
+    
+    while True:
+        i, j  = fun.r.sample(range(1, len(tour[0])-1), 2)
+    
+        if i != j:
+            route[0][i], route[0][j] = route[0][j], route[0][i]
+            route = fun.time_and_sat_calc(route) 
+            break 
+    
+    return route
+
 def stochastic_2_opt(tour):
     
-    best_route = fun.deepcopy(tour)
+    route = fun.deepcopy(tour)
 
     while (True):
         i, j  = fun.r.sample(range(1, len(tour[0])-1), 2) #seleziono due nodi in maniera stocastica dal tour passato in input
@@ -12,30 +25,51 @@ def stochastic_2_opt(tour):
     if (i > j):
         i, j = j, i #se 'i' è più grande, scambio i valori per permettere uno switch 2-opt in seguito
     
-    best_route[0][i:j+1] = list(reversed(best_route[0][i:j+1]))                       
-    best_route = fun.time_and_sat_calc(best_route)                     
+    route[0][i:j+1] = list(reversed(route[0][i:j+1]))                       
+    route = fun.time_and_sat_calc(route)                     
     
-    return best_route
+    return route
      
+def chain_relocation(tour):
+    route = fun.deepcopy(tour)
 
-def variable_neighborhood_search(tour, neighbourhood_size = 5):
+    while True:
+        i, j = fun.r.sample(range(1, len(tour[0])-1), 2)
+        if i != j:
+            break
 
-    solution = fun.deepcopy(tour) #x=initial_solution
-    count = 0 #k=1
-    
-    while (count < neighbourhood_size): #while k <= kmax do
-        candidate = stochastic_2_opt(solution) #shaking
+    if i > j:
+        i, j = j, i
 
-        if ( candidate[1] > solution[1] or (candidate[1] == solution[1] and candidate[2] < solution[2])): #if c(x')> c(x) then
-            solution = fun.deepcopy(candidate) #x = x'
-            count = 0 #k = 1
-       
-        else:
-            count += 1 #k= k+1                            
-     
-    print(f"\n\nSOLUZIONE stock-VNS --> {solution}\n\n") 
-    
-    return solution
-    
+    rand = fun.r.randint((j-i+1), (len(tour[0])-(j+1)))
+    k, l = (i,j) + rand 
+    route[0][i:j] , route[0][k:l] = route[0][k:l], route[0][i:j]
 
+    route = fun.time_and_sat_calc(route) 
+
+    return route
+
+def variable_neighborhood_search(tour):
+
+    solution = fun.deepcopy(tour) 
+
+    i = 0
+    while True:
+        if i == 0:
+            candidate = stochastic_2_opt(solution)
+        elif i == 1:
+            candidate = node_swap(solution)
+        elif i == 2:
+            candidate = chain_relocation(solution)
+
+        candidate = fun.time_and_sat_calc(candidate)
+
+        if candidate[1] > solution[1] or (candidate[1] == solution[1] and candidate[2] < solution[2]): 
+            solution = fun.deepcopy(candidate)
+            i=0
+        else: 
+            i+=1
+            if i == 3:
+                break
         
+    return solution
