@@ -20,37 +20,14 @@ def neighborhood(node, time, alfa):
     
     m = min(rank, key=lambda x:x[0])[0]
     M = max(rank, key=lambda x:x[0])[0]
-    
+    lim = m + alfa*(M-m)
+
     for i in range(len(rank)):
-        if(rank[i][0] <= m + alfa*(M-m)):
+        if rank[i][0] <= lim :
             rcl.append(rank[i])
 
     return rcl
 
-"""
-#Restituisce una lista di nodi ordinati in base al rapporto di gradimento ponderato e distanza con il nodo passato in input
-def ratio(node = 0): 
-
-    candidate = []
-
-    for i in range(len(fun.f["attrazioni"])):
-
-        if(node == (i + 1)):
-            continue
-        
-        Grad_pond = fun.Grad_pond[(i + 1)]
-        Ttot = ( Xdata[(i + 1), node] )
-        if (Ttot == 0):
-            GT=100000
-        else:
-            GT=Grad_pond/(Ttot/60)
-        candidate.append([Ttot, (i + 1), GT])
-
-    candidate = sorted(candidate, reverse = True, key=lambda x:x[2])
-
-    return candidate
-#-
-"""
 
 #Local Search : Ricerca esaustiva degli ottimi locali
 def ls_2_opt(attr_tour):
@@ -92,37 +69,40 @@ def ls_double_bridge(attr_tour):
 def greedy_randomized_adaptive_search_procedure(iterations, alfa):
     
     count = 0
-    start_tour = fun.first_op()
-    best_solution = fun.deepcopy(start_tour)
+    #start_tour = fun.first_op()
+    best_solution = [[], 0, 0]
 
     s = int(input("\nSelect what algorithms' sequence you want to use.\n\n\t1) GRASP with exaustive local search\n\t2) GRASP with stock-VNS\n\t3) (1) + Path Relinking\n\t4) (2) + Path Relinking\n\n"))
 
     while (iterations > count):
         first_sol = find_solution(alfa)
-        
-        if(s == 1 or s == 3):
-            #exaustive local search
-            candidate = ls_double_bridge( ls_2_opt( first_sol ) )
-        elif(s == 2 or s == 4):
-            #stock-VNS
-            candidate = vns(first_sol)
-        
-        if ( candidate[1] > best_solution[1] or (candidate[1] == best_solution[1] and candidate[2] < best_solution[2])):    #(candidate[1] / candidate[2]) > (best_solution[0][1] / best_solution[0][2])
+    
+        if(len(first_sol[0])>=5):
+            if(s == 1 or s == 3):
+                #exaustive local search
+                candidate = ls_double_bridge( ls_2_opt( first_sol ) )
+            elif(s == 2 or s == 4):
+                #stock-VNS
+                candidate = vns(first_sol)
+        else:
+            continue
+
+        if ( candidate[1] > best_solution[1] or (candidate[1] == best_solution[1] and candidate[2] < best_solution[2])):    
             best_solution = fun.deepcopy(candidate)
-            fun.write_res()
             count += 1
             fun.write_res( best_solution, s, count )
-            print('Iteration =', count, '-> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
+            print('Iteration =', count, ' --> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
         else:
             count += 1
-            print('Iteration =', count, '\t--> The best solution is the same that was found in last iteration!')
+            print('Iteration =', count, '   --> The best solution is the same that was found in last iteration!')
             if(s == 3 or s == 4):
                 best_solution = p_rel(candidate, best_solution)
-                print("\n\t\tBut Path relinking helped to find a better solution...\n")
-                fun.write_res( best_solution, s, count )
-                print(' -> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
+                if ( candidate[1] > best_solution[1] or (candidate[1] == best_solution[1] and candidate[2] < best_solution[2])):   
+                    print("\n\t\tBut Path relinking helped to find a better solution...\n")
+                    fun.write_res( best_solution, s, count )
+                    print(' -> Satisfaction =', best_solution[1], ', Time =', best_solution[2])
 
-    print("Best Solution =\n", best_solution)
+    print("\n\nBest Solution Found\n", best_solution)
     return best_solution
 #-
 
@@ -139,11 +119,10 @@ def find_solution(alfa):
         #prendo un elemento casuale dalla RCL
         next = fun.r.choice(RCL)
 
-        while ( len(sequence) > 2 and fun.end_tour(time/60, sequence[-1], next[1]) ): 
+        while fun.end_tour(time/60, sequence[-1], next[1]) : 
             #se trovo un'attrazione che non è raggiungibile dal nodo precedente allora la rimuovo dalla RCL e continuo a cercare se trovo una possibile attrazione da visitare
             RCL.remove(next)
-            #se non trovo nessun elemento nella RCL allora esco dal ciclo
-            if (len(RCL) == 0):
+            if len(RCL) == 0:
                 break
             next = fun.r.choice(RCL)
         
@@ -158,7 +137,8 @@ def find_solution(alfa):
     sequence.append(sequence[0])
     seed[0] = sequence
     seed = fun.time_and_sat_calc(seed)
-
+    if len(seed [0]) <5:
+        print( "ops", seed[0] )
     return seed
 
 

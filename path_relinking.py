@@ -17,9 +17,9 @@ def path_relinking(initial_solution, final_solution):
 
                 if  best[2] == 0 or (temp[1] > best[1] or (temp[1] == best[1] and temp[2] < best[2])):
                     best = fun.deepcopy(temp)
+                    tour = fun.deepcopy(best)
 
-        tour = fun.deepcopy(best)
+        
         if (tour[1] > final_solution[1] or (tour[1] == final_solution[1] and tour[2] < final_solution[2])):
-            print(f"\n\nSOLUZIONE Path Relinking --> {tour}\n\n") 
             break
     return tour

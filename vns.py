@@ -1,3 +1,4 @@
+from os import remove
 import funzioni as fun
 
 def node_swap(tour):
@@ -17,12 +18,12 @@ def stochastic_2_opt(tour):
     
     route = fun.deepcopy(tour)
 
-    while (True):
+    while True:
         i, j  = fun.r.sample(range(1, len(tour[0])-1), 2) #seleziono due nodi in maniera stocastica dal tour passato in input
-        if(not(i == j or i == 0 or j == 0 or i == j-1 or i == j+1)): 
+        if not(i == 0 or j == 0 or abs(i-j)<=1): 
             break
         
-    if (i > j):
+    if i > j:
         i, j = j, i #se 'i' è più grande, scambio i valori per permettere uno switch 2-opt in seguito
     
     route[0][i:j+1] = list(reversed(route[0][i:j+1]))                       
@@ -31,23 +32,33 @@ def stochastic_2_opt(tour):
     return route
      
 def chain_relocation(tour):
+    #Chain relocation: intorno ottenuto dalla rimozione di una sequenza di 
+    #archi dal ciclo e dal suo reinserimento in un altro punto. Si eliminano i
+    #2 archi prima e dopo la sequenza, e un terzo laddove si va a reinserire.
+    while True:
+        i,j = fun.r.sample(range(1,len(tour[0])-2), 2)   
+        
+        if i > j:
+            i,j = j,i
+        if not (abs(i-j)==1 or abs(i-j)==len(tour[0])-3):
+            break
+    
+    choose = list(range(1,len(tour[0])-1))
+    choose = choose[0:(i-1)] + choose[j:]
+    reloc_p = fun.r.choice(choose)
+    del(choose)
+
     route = fun.deepcopy(tour)
 
-    while True:
-        i, j = fun.r.sample(range(1, len(tour[0])-1), 2)
-        if i != j:
-            break
-
-    if i > j:
-        i, j = j, i
-
-    rand = fun.r.randint((j-i+1), (len(tour[0])-(j+1)))
-    k, l = (i,j) + rand 
-    route[0][i:j] , route[0][k:l] = route[0][k:l], route[0][i:j]
+    if reloc_p > j:
+        route[0] = route[0][0:i] + route[0][j:reloc_p] + route[0][i:j] + route[0][reloc_p:]
+    elif reloc_p < i:
+        route[0] = route[0][0:reloc_p] + route[0][i:j] + route[0][reloc_p:i] + route[0][j:]
 
     route = fun.time_and_sat_calc(route) 
 
     return route
+
 
 def variable_neighborhood_search(tour):
 

@@ -1,3 +1,4 @@
+from pathlib import Path
 import numpy as np, requests, json , openpyxl as xl, webbrowser as wb, random as r, os, folium
 from copy import deepcopy
 from time import time 
@@ -88,7 +89,7 @@ def wexcel(tour, fun_name, iteration): #scrivo il risultato su un file excel
             ricerca['E'+str(i+2)]=tour[0][i]
             ricerca['E'+str(i+2)].value
         
-        sheet.save('Solutions\\ricerca_'+fun_name+'_#'+str(iteration)+'.xlsx')
+        sheet.save('.//'+fun_name+'//#'+str(iteration)+'.xlsx')
         return 1
 
     except:
@@ -97,17 +98,14 @@ def wexcel(tour, fun_name, iteration): #scrivo il risultato su un file excel
 def write_res(tour, fun_name, iteration): #scrivo i risultati su un file excel e creo una mappa per ogni soluzione possibile trovata
 
     if fun_name == 1 :
-        fun_name = "Exaustive-GRASP"
+        fun_name = "ExaustiveGRASP"
     elif fun_name == 2 :
-        fun_name = "GRASP&VNS"
-    elif fun_name == 3 :
-        fun_name = "ExGRASP&PR"
+        fun_name = "GRASP+VNS"
     elif fun_name == 4 :
-        fun_name = "GRASP&VNS&PR"
-    
-    path = "C:\\Users\\luk8_\\Desktop\\MAGISTRALE\\Ricerca Operativa\\Progetto\\Solutions\\"+fun_name
-    if path.exists() == False:
-        os.mkdir()
+        fun_name = "GRASP+VNS+PR"
+
+    if not os.path.exists(fun_name) :
+        os.mkdir(fun_name)
     
     
     map = folium.Map(location=[44.83895673644131, 11.614725304456822], zoom_start=14)
@@ -140,8 +138,8 @@ def write_res(tour, fun_name, iteration): #scrivo i risultati su un file excel e
             icon = folium.Icon(color="darkpurple", icon="map", prefix="fa")
             ).add_to(map)
 
-    map.save(path+"\\#"+str(iteration)+".html")
-    #wb.open(path+"\\#"+str(iteration)+".html")
+    map.save('.//'+fun_name+"//Map#"+str(iteration)+".html")
+    #wb.open(fun_name+"\\#"+str(iteration)+".html")
     del(map)
 
 def route(tour): #scrivo le coordinate dei luoghi su un file geojson per poi creare la mappa
