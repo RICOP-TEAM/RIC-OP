@@ -30,7 +30,7 @@ def neighborhood(node, time, alfa):
 
 
 #Local Search : Ricerca esaustiva degli ottimi locali
-def ls_2_opt(attr_tour):
+def ls_2_opt(attr_tour, count):
 
     best_route = fun.deepcopy(attr_tour)
     
@@ -43,10 +43,10 @@ def ls_2_opt(attr_tour):
             tour = fun.time_and_sat_calc(tour) 
             if (best_route[1]/best_route[2] < tour[1]/tour[2]):
                 best_route = fun.deepcopy(tour)
-
+    fun.write_res( best_route, "2-opt", count )
     return best_route
 
-def ls_double_bridge(attr_tour):
+def ls_double_bridge(attr_tour, count):
 
     tour = fun.deepcopy(attr_tour)
     best_route = fun.deepcopy(tour)
@@ -61,7 +61,7 @@ def ls_double_bridge(attr_tour):
                     tour = fun.time_and_sat_calc(tour)
                     if (best_route[1]/best_route[2] < tour[1]/tour[2]):
                         best_route = fun.deepcopy(tour)
-    
+    fun.write_res( best_route, "DoubleBr", count)
     return best_route
 #-
 
@@ -72,16 +72,16 @@ def greedy_randomized_adaptive_search_procedure(iterations, alfa):
     #start_tour = fun.first_op()
     best_solution = [[], 0, 0]
 
-    s = int(input("\nSelect what algorithms' sequence you want to use.\n\n\t1) GRASP with exaustive local search\n\t2) GRASP with stock-VNS\n\t3) (1) + Path Relinking\n\t4) (2) + Path Relinking\n\n"))
+    s = int(input("\nSelect what algorithms' sequence you want to use.\n\n\t1) GRASP with exaustive local search\n\t2) GRASP with stock-VNS\n\n"))
 
     while (iterations > count):
         first_sol = find_solution(alfa)
     
         if(len(first_sol[0])>=5):
-            if(s == 1 or s == 3):
+            if(s == 1):
                 #exaustive local search
-                candidate = ls_double_bridge( ls_2_opt( first_sol ) )
-            elif(s == 2 or s == 4):
+                candidate = ls_double_bridge( ls_2_opt( first_sol ,count) , count)
+            elif(s == 2):
                 #stock-VNS
                 candidate = vns(first_sol)
         else:
