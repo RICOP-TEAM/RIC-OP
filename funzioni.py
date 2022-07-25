@@ -1,4 +1,3 @@
-from pathlib import Path
 import numpy as np, requests, json , openpyxl as xl, webbrowser as wb, random as r, os, folium
 from copy import deepcopy
 from time import time 
@@ -13,6 +12,7 @@ Grad_pond=[0]
 for p in f["attrazioni"]: 
     Grad_pond.append(np.average(list(p["gradimento"].values()), weights=list(f["utente"]["gradimento"].values())))
 
+'''
 def dist_home(): #utilizzo iniziale solo per calcolare le distanze albergo-attrazione
 
     try:
@@ -32,7 +32,7 @@ def dist_home(): #utilizzo iniziale solo per calcolare le distanze albergo-attra
 
     except:
         return 0
-
+'''
 def open_attr(node, time): #verifico che una determinata attrazione sia aperta
 
     ora_attuale = f["utente"]["inizio"] + time
@@ -60,7 +60,7 @@ def end_tour(time,a,b): #calcolo se rimane tempo per visitare l'attrazione e tor
         return 0
     else:
         return 1
-
+'''
 def wexcel(tour, fun_name, iteration): #scrivo il risultato su un file excel
 
     try:
@@ -97,16 +97,8 @@ def wexcel(tour, fun_name, iteration): #scrivo il risultato su un file excel
 
 def write_res(tour, fun_name, iteration): #scrivo i risultati su un file excel e creo una mappa per ogni soluzione possibile trovata
 
-    if fun_name == 1 :
-        fun_name = "ExaustiveGRASP"
-    elif fun_name == 2 :
-        fun_name = "GRASP+VNS"
-    elif fun_name == 4 :
-        fun_name = "GRASP+VNS+PR"
-
     if not os.path.exists(fun_name) :
         os.mkdir(fun_name)
-    
     
     map = folium.Map(location=[44.83895673644131, 11.614725304456822], zoom_start=14)
 
@@ -185,7 +177,7 @@ def clear_route(): #ripulisco il file geojson contenente il percorso della soluz
         json.dump(r_default, js, indent=4)
     
     return 1
-
+'''
 def time_and_sat_calc(tour):
     sat = 0
     time = 0
@@ -205,45 +197,3 @@ def time_and_sat_calc(tour):
     tour[2] = round(time / 60, 4)
     tour[1] = round(sat,4)
     return tour
-
-def first_op():
-    
-    seed = [[],float("inf"), float("-inf")]
-    sequence = [0]
-    time = 0
-    
-    while(True):
-        n = 0
-        candidati = []
-
-        for i in range(len(f["attrazioni"])):
-            node = i+1   
-            open = open_attr(node, time/60)
-            if (node not in sequence):
-                if (open == 0):
-                    candidati.append((f["attrazioni"][i]["orari"][0]["apre"], dist[sequence[-1], node], node))
-                elif (open > 0):            
-                    candidati.append((f["attrazioni"][i]["orari"][0]["apre"], (dist[sequence[-1], node] + open), node))
-        candidati = sorted(candidati, key=lambda x:(x[0],x[1])) #ordino la lista di candidati possibili in base a chi apre prima
-        
-        while( n<len(candidati) and end_tour(time/60, sequence[-1], candidati[n][2])):
-            n += 1 
-
-        if(n > len(candidati) - 1):
-            break
-
-        time += candidati[n][1]
-        sequence.append(candidati[n][2])
-
-    sequence.append(0)
-    
-    seed[0] = sequence
-    seed = time_and_sat_calc(seed)
-
-    #fun.write_res( seed, "start", 0 )
-    #fun.wexcel( seed, "start", 0 )
-
-    print(f"\n\nSOLUZIONE DI PARTENZA --> {seed}\n\n") 
-
-
-    return seed

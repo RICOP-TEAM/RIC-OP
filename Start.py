@@ -1,6 +1,7 @@
 import funzioni as fun
 from grasp import greedy_randomized_adaptive_search_procedure as g
 from funzioni import first_op as FOp
+from threading import Thread
 
 #inizializzazione albergo
 '''
@@ -24,12 +25,8 @@ from funzioni import first_op as FOp
         fun.json.dump(fun.f, js,indent=4) 
 '''
 #fase iniziale terminata
-
-fun.os.mkdir("Solutions")
-  
-    
-#eseguo i vari algoritmi
-res=[]
+#def greedy_randomized_adaptive_search_procedure(iterations, alfa):
+t1 = Thread(target=g, args=(500, 0.5))
 res.append( g(iterations = 500, greediness_value = 0.5) )
 
 

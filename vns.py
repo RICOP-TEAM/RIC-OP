@@ -62,6 +62,8 @@ def chain_relocation(tour):
 
 def variable_neighborhood_search(tour):
 
+    start = fun.time()
+
     solution = fun.deepcopy(tour) 
 
     i = 0
@@ -82,5 +84,7 @@ def variable_neighborhood_search(tour):
             i+=1
             if i == 3:
                 break
-        
+
+    
+    #f.write(f"VNS: {fun.time()-start}, {solution}\n")
     return solution
