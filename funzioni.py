@@ -33,6 +33,7 @@ def dist_home(): #utilizzo iniziale solo per calcolare le distanze albergo-attra
     except:
         return 0
 '''
+
 def open_attr(node, time): #verifico che una determinata attrazione sia aperta
 
     ora_attuale = f["utente"]["inizio"] + time
@@ -40,10 +41,12 @@ def open_attr(node, time): #verifico che una determinata attrazione sia aperta
     for i in range(len(f["attrazioni"][node-1]["orari"])):
         apertura = f["attrazioni"][node-1]["orari"][i]["apre"]
         chiusura = f["attrazioni"][node-1]["orari"][i]["chiude"]
+
         if (apertura <= ora_attuale < chiusura):
             return 0
         elif(i==0 and ora_attuale < apertura):
             return int((apertura - ora_attuale)*60) 
+
     if(ora_attuale >= chiusura):
         return int((24 + apertura - ora_attuale)*60)
     elif(ora_attuale <= apertura):
@@ -51,15 +54,20 @@ def open_attr(node, time): #verifico che una determinata attrazione sia aperta
     #se l'attrazione è chiusa ritorno il tempo che manca affinchè sia aperta
     #restituisco il risultato in minuti
 
+
 def end_tour(time,a,b): #calcolo se rimane tempo per visitare l'attrazione e tornare all'albergo
     
     t_tot = f["utente"]["fine"] - f["utente"]["inizio"]
     t_pass = time + ( (dist[a,b] + dist[b,0] + open_attr(b, time)) /60 )
-    #tempo.passato = tempo.posti.già.visitati + (tempo.pross.attrazione + tempo.ritorno.albergo + penalità se attr chiusa)
+    #tempo.passato = tempo.visitati + (tempo.pross.attr + tempo.ritorno + penalità)
+
     if( t_tot >= t_pass):
         return 0
     else:
         return 1
+
+
+        
 '''
 def wexcel(tour, fun_name, iteration): #scrivo il risultato su un file excel
 
@@ -178,6 +186,8 @@ def clear_route(): #ripulisco il file geojson contenente il percorso della soluz
     
     return 1
 '''
+
+
 def time_and_sat_calc(tour):
     sat = 0
     time = 0
@@ -187,7 +197,8 @@ def time_and_sat_calc(tour):
         open = open_attr(tour[0][k], time/60)
         time = time + (dist[tour[0][k-1],tour[0][k]] + open)
         
-        if (tour[0][k] not in tour[0][0:k]): #se ancora non è stata visitata l'attrazione aggiungo il gradimento
+        #se ancora non è stata visitata l'attrazione aggiungo il gradimento
+        if (tour[0][k] not in tour[0][0:k]): 
             sat += Grad_pond[tour[0][k]]
 
         if(end_tour(time/60, tour[0][k-1], tour[0][k])):
@@ -197,3 +208,7 @@ def time_and_sat_calc(tour):
     tour[2] = round(time / 60, 4)
     tour[1] = round(sat,4)
     return tour
+
+
+
+

@@ -9,8 +9,8 @@
         "nome": "Albergo",
         "x": 44.845352541105,
         "y": 11.612748736243,
-        "inizio": 10,
-        "fine": 15,
+        "inizio": 8,
+        "fine": 18,
         "gradimento": {
             "Artistico": 4,
             "Culturale": 4,

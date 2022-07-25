@@ -1,6 +1,6 @@
 import funzioni as fun
 from funzioni import dist as Xdata
-
+from tqdm import tqdm
 
 #Construciton of the initial solution
 def find_solution(alfa):
@@ -244,14 +244,18 @@ def greedy_randomized_adaptive_search_procedure(iterations, alfa):
         #comparing best solution in this iteration with global best solution
         if ( candidate[1] > best_solution[1] or (candidate[1] == best_solution[1] and candidate[2] < best_solution[2])):    
             best_solution = fun.deepcopy(candidate)
-            print(f'Iteration = {count} --> Satisfaction =  {best_solution[1]}; Time = {best_solution[2]} \n\n')
+            best[str(alfa)][str(esec)].append([ best_solution[1], best_solution[2], best_solution[0]])#sat, tourtime, tour
+
         else:
             print(f'Iteration = {count} \t--> The best solution is the same that was found in last iteration!\n\n')
+            best[str(alfa)][str(esec)].append([ best_solution[1], best_solution[2], best_solution[0]])
         
         print('___________________\n\n')
 
     print("---END---")
     print(f"\n\n---\n\nBest Solution Found\n{best_solution}")
+    with open("best_data.json","w") as best_data:
+        fun.json.dump(best, best_data,  indent=4)
     return best_solution
 
 
@@ -505,8 +509,70 @@ dvns = {
         "10":[]
     }
     }
+best = {
+    "0":{
+        "1":[],
+        "2":[],
+        "3":[],
+        "4":[],
+        "5":[],
+        "6":[],
+        "7":[],
+        "8":[],
+        "9":[],
+        "10":[]
+    },
+    "0.25":{
+        "1":[],
+        "2":[],
+        "3":[],
+        "4":[],
+        "5":[],
+        "6":[],
+        "7":[],
+        "8":[],
+        "9":[],
+        "10":[]
+    },
+    "0.5":{
+        "1":[],
+        "2":[],
+        "3":[],
+        "4":[],
+        "5":[],
+        "6":[],
+        "7":[],
+        "8":[],
+        "9":[],
+        "10":[]
+    },
+    "0.75":{
+        "1":[],
+        "2":[],
+        "3":[],
+        "4":[],
+        "5":[],
+        "6":[],
+        "7":[],
+        "8":[],
+        "9":[],
+        "10":[]
+    },
+    "1":{
+        "1":[],
+        "2":[],
+        "3":[],
+        "4":[],
+        "5":[],
+        "6":[],
+        "7":[],
+        "8":[],
+        "9":[],
+        "10":[]
+    }
+    }
 
-for esec in range(1,11):
+for esec in tqdm(range(1,11)):
     for alfa in [0, 0.25, 0.5, 0.75, 1]:
         tour = greedy_randomized_adaptive_search_procedure(iterations = 100, alfa = alfa)
         print ('ok')
